@@ -16,31 +16,7 @@ function TodoItem({ label, delete_todo }) {
 
 
 
-const createUser = () => {
-    try {
-        console.log("creando usuario")
-        const raw = JSON.stringify([])
-        const url = `https://playground.4geeks.com/apis/fake/todos/user/NickolaiGaming`;
-        const options = {
-            method: 'POST',
-            body: raw,
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }
-        const response = fetch(url, options)
-        const data = response.json()
-        console.log(data);
-        if (data.msg) {
-            console.log("error")
-            obtenerTareas()
-        }
 
-    }
-    catch (error) {
-        console.log(error.message)
-    }
-}
 
 const App = () => {
     const [todos, setTodos] = useState([]);
@@ -49,6 +25,32 @@ const App = () => {
     useEffect(() => {
         obtenerTareas()
     }, [])
+
+    const createUser = async () => {
+        try {
+            console.log("creando usuario")
+            const raw = JSON.stringify([])
+            const url = `https://playground.4geeks.com/apis/fake/todos/user/NickolaiGaming`;
+            const options = {
+                method: 'POST',
+                body: raw,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+            const response = await fetch(url, options)
+            const data = await response.json()
+            console.log(data);
+            if (data.msg) {
+                console.log("error")
+                obtenerTareas()
+            }
+
+        }
+        catch (error) {
+            console.log(error.message)
+        }
+    }
 
     function borrarTodo(index) {
         const newTarea = todos.toSpliced(index, 1)
